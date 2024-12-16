@@ -4,7 +4,7 @@
 
   <groupId>io.github.tagaryen</groupId>
   <artifactId>archer-log</artifactId>
-  <version>1.1.6</version>
+  <version>1.1.7</version>
   <packaging>jar</packaging>
   <description>
     Log library. 
@@ -44,8 +44,16 @@
     <url>https://github.com/tagaryen/archer-log</url>
   </scm>
   
+  <dependencies>
+  	<dependency>
+	  <groupId>io.github.tagaryen</groupId>
+	  <artifactId>archer-xjson</artifactId>
+	  <version>1.1.5</version>
+	</dependency>
+  </dependencies>
+  
   <build>
-    <finalName>archer-log-${version}</finalName>
+    <finalName>archer-log-${project-version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

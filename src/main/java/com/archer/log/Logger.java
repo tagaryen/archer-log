@@ -97,7 +97,7 @@ public class Logger {
 		LogMessage logMsg = getLogMessage(level);
 		String[] texts = new String[args.length];
 		for(int i = 0; i < args.length; i++) {
-			texts[i] = LogUtil.formatObject(args[i], properties.getStackDepth());
+			texts[i] = LogObjectFormatter.formatObject(args[i], properties.getStackDepth());
 		}
 		char[] txtChars = txt.toCharArray();
 		StringBuilder finalTxtSb = new StringBuilder(txt.length() * args.length * 2);
@@ -116,8 +116,8 @@ public class Logger {
 		}
 		if(count < texts.length) {
 			for(; count < texts.length; count++) {
-				finalTxtSb.append(LogUtil.COMMA)
-				.append(LogUtil.SPACE).append(texts[count]);
+				finalTxtSb.append(LogObjectFormatter.COMMA)
+				.append(LogObjectFormatter.SPACE).append(texts[count]);
 			}
 		}
 		logMsg.msg(finalTxtSb.toString());
