@@ -10,7 +10,7 @@ public class Logger {
 
 	private static final String def = "DEFAULT";
 
-	private static final int CLASS_STACK = 4;
+	private static final int CLASS_STACK = 3;
 
 	private static final char[] formatPattern = {'{', '}'};
 	
@@ -30,7 +30,7 @@ public class Logger {
 		LogManager.setProperties(name, properties);
 	} 
 
-	private static void jlog(String msg) {
+	protected static void jlog(String msg) {
 		System.out.println(msg);
 	}
 	
@@ -89,11 +89,47 @@ public class Logger {
 	public void error(String txt, Object...texts) {
 		log(LogLevel.ERROR, txt, texts);
 	}
-
+	
 	private void log(LogLevel level, String txt, Object...args) {
 		if(level.getLevel() > logLevel.getLevel()) {
 			return ;
 		}
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		StackTraceElement sourceInvoke;
+		if(stackTrace.length > CLASS_STACK) {
+			sourceInvoke = stackTrace[CLASS_STACK];
+		} else if (stackTrace.length > 0){
+			sourceInvoke = stackTrace[stackTrace.length - 1];
+		} else {
+			throw new RuntimeException("Error stack trace"); 
+		}
+		
+		LogRecoder.doRecord(new LogEvent(this, sourceInvoke, level, txt, args));
+	}
+	
+	protected boolean isAppendFile() {
+		return properties.isAppendFile();
+	}
+	
+	protected int getStackDepth() {
+		return properties.getStackDepth();
+	}
+	
+	protected LogFileWriter getWriter() {
+		return writer;
+	}
+
+	protected TimeFormatter getTimeFormatter() {return tf;}
+	
+	protected ClassFormatter getClassFormatter() {return cf;}
+
+	@SuppressWarnings("unused")
+	@Deprecated
+	private void dolog(LogLevel level, String txt, Object...args) {
+		if(level.getLevel() > logLevel.getLevel()) {
+			return ;
+		}
+		
 		LogMessage logMsg = getLogMessage(level);
 		String[] texts = new String[args.length];
 		for(int i = 0; i < args.length; i++) {
@@ -124,7 +160,7 @@ public class Logger {
 		appendLog(logMsg);
 	}
 	
-
+	@Deprecated
 	private LogMessage getLogMessage(LogLevel level) {
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		StackTraceElement sourceInvoke;
@@ -142,7 +178,8 @@ public class Logger {
 		
 		return new LogMessage(level, LocalDateTime.now(), logCls);
 	}
-	
+
+	@Deprecated
 	private void appendLog(LogMessage logMsg) {
 		String msg = logMsg.toConsoleString(tf, cf);
 		jlog(msg);

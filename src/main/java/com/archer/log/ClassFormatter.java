@@ -2,12 +2,10 @@ package com.archer.log;
 
 final class ClassFormatter {
 
-	private static final String CLS = "cls";
+	private static final String CLS = "classSimple";
 	private static final String CLASS = "class";
 	private static final String METHOD = "method";
 	private static final String LINE = "line";
-	
-	private String pattern;
 	
 	private boolean hasClass = false;
 	private boolean isSimpleClass = false;
@@ -17,25 +15,24 @@ final class ClassFormatter {
 	
 	public ClassFormatter(String pattern) {
 		parse(pattern);
-		this.pattern = pattern;
 	}
 	
 	public String format(LogClass classMsg) {
-		String formatMsg = pattern;
+		StringBuilder sb = new StringBuilder(classMsg.length());
 		if(hasClass) {
 			if(isSimpleClass) {
-				formatMsg = formatMsg.replace(CLS, classMsg.getSimpleClassName());
+				sb.append(classMsg.getSimpleClassName());
 			} else {
-				formatMsg = formatMsg.replace(CLASS, classMsg.getClassName());
+				sb.append(classMsg.getClassName());
 			}
 		}
 		if(hasMethod) {
-			formatMsg = formatMsg.replace(METHOD, classMsg.getMethodName());
+			sb.append('.').append(classMsg.getMethodName());
 		}
 		if(hasLine) {
-			formatMsg = formatMsg.replace(LINE, classMsg.getLine());
+			sb.append('.').append(classMsg.getLine());
 		}
-		return "[" + formatMsg + "]";
+		return "[" + sb.toString() + "]";
 	}
 	
 	private void parse(String pattern) {
@@ -45,8 +42,7 @@ final class ClassFormatter {
 		if(pattern.contains(CLS)) {
 			hasClass = true;
 			isSimpleClass = true;
-		}
-		if(pattern.contains(CLASS)) {
+		} else if (pattern.contains(CLASS)) {
 			if(isSimpleClass) {
 				throw new IllegalArgumentException("invalid pattern " + pattern);
 			}

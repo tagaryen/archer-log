@@ -4,7 +4,7 @@ public class LogProperties {
 
 	private static final String  DEFAULT_LEVEL = "INFO";
 	private static final String  DEFAULT_TIME = "yyyy-MM-dd HH:mm:ss.SSS";
-	private static final String  DEFAULT_CLASS = "class.method.line";
+	private static final String  DEFAULT_CLASS = "classSimple.method.line";
 	private static final int     DEFAULT_STACK = 6;
 	private static final int     DEFAULT_DAYS = 7;
 	private static final boolean DEFAULT_WRITE_FILE = false;

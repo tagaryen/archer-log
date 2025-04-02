@@ -13,7 +13,6 @@ final class LogClass {
 	private String line;
 	
 	public LogClass(String className, String methodName, String line) {
-		super();
 		this.className = className;
 		this.methodName = methodName;
 		this.line = line;

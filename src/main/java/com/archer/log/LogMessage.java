@@ -2,6 +2,7 @@ package com.archer.log;
 
 import java.time.LocalDateTime;
 
+@Deprecated
 final class LogMessage {
 	
 	private static final int BASE_LEN = 2 + 5 + 2 + 24 + 6;
@@ -17,7 +18,6 @@ final class LogMessage {
 	private String msg;
 	
 	public LogMessage(LogLevel level, LocalDateTime time, LogClass clazz) {
-		super();
 		this.level = level;
 		this.lv = formatLv(level);
 		this.time = time;
@@ -63,12 +63,10 @@ final class LogMessage {
 		switch(level) {
 		case TRACE:
 		case DEBUG:
-		case ERROR: {
-			return "["+level.getValue()+"]";
-		}
+		case ERROR:
 		case INFO:
 		case WARN: {
-			return "["+level.getValue()+" ]";
+			return "["+level.getValue()+"]";
 		}
 		default: {
 			return "[UNKNOWN]";

@@ -13,7 +13,8 @@ final class FileAppender {
 		sb.append(lv).append(SPACE)
 		  .append(time).append(SPACE)
 		  .append(clazz).append(SPACE)
-		  .append(msg);
+		  .append(msg)
+		  .append('\n');
 		
 		return sb.toString();
 	}

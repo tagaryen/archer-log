@@ -40,6 +40,7 @@ class LogFileWriter {
     	}
     }
 
+    @Deprecated
     public void record(String msg) {
     	byte[] content = (msg+"\n").getBytes(StandardCharsets.UTF_8);
     	LogRecoder.doRecord(this, content);
