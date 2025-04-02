@@ -30,7 +30,7 @@ final class ClassFormatter {
 			sb.append('.').append(classMsg.getMethodName());
 		}
 		if(hasLine) {
-			sb.append('.').append(classMsg.getLine());
+			sb.append(':').append(classMsg.getLine());
 		}
 		return "[" + sb.toString() + "]";
 	}
